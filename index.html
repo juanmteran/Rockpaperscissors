@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock, Paper, Scissors!</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+ 
+
+<div> 
+  <h1> Rokc Paper Scissors 5 rounds</h1>
+  <p> Chhose wisely</p>
+  <button type="button">Rock</button>
+  <button type="button">Paper</button>
+  <button type="button">Scissors</button>
+  <p id ="LastGame"></p>
+  <p id="RoundNr"></p>
+  <p id="Score"></p>
+</div>
+
+<script>
+  let playerScore = 0;
+  let computerScore = 0;
+  let roundCount = 0;
+  let gameResult = "";  
+  const lastGameResult = document.querySelector('#LastGame');
+  const currentScore = document.querySelector('#Score');
+  const numberOfRound = document.querySelector('#RoundNr');
+  const playerInput = document.querySelectorAll('button');
+
+
+  function computerPlay() {
+      let items = ["Rock", "Paper", "Scissors"]
+      return items[Math.floor((Math.random()*items.length))]
+  }
+  
+  function playRound(playerSelection) {
+    
+
+    let computerSelection = computerPlay();
+      if (playerSelection === computerSelection) {
+          gameResult = "Tie."
+          roundCount++;
+      }
+      else {
+          if (playerSelection === "Rock") {
+              if (computerSelection === "Paper") {
+                gameResult = "Paper beats Rock. Computer wins."
+                computerScore++;
+                roundCount++;
+              }
+              else {
+                gameResult = "Rock beats Scissors. Player wins."
+                playerScore++;
+                roundCount++;                  
+              }
+          }
+          if (playerSelection === "Paper") {
+              if (computerSelection === "Rock"){
+                gameResult = "Paper beats Rock. Player wins."
+                playerScore++;
+                roundCount++;
+                  }
+              else {
+                gameResult = "Scissors beat Paper. Computer wins."
+                computerScore++;
+                roundCount++;                  
+              }
+          }
+          if (playerSelection === "Scissors") {
+              if (computerSelection === "Paper"){
+                gameResult = "Scissors beat Paper. Player wins."
+                playerScore++;
+                roundCount++;                
+              }
+              else {
+                gameResult = "Rock beats Scissors. Computer wins."
+                computerScore++;
+                roundCount++;            
+              }
+          }
+      }
+      if (roundCount == 5) {
+        if (playerScore == computerScore) { 
+          playerScore = 0;
+          computerScore = 0;
+          alert("It's a tie!")
+          }
+        else if (playerScore> computerScore) { 
+          playerScore = 0;
+          computerScore = 0;
+          alert("You won, congratulations!")
+          }
+        else {
+          playerScore = 0;
+          computerScore = 0;
+          alert("I'm sorry, win for the computer!")
+        }
+        roundCount= 0;
+      }
+      lastGameResult.textContent = ("Game: "+gameResult);
+      currentScore.textContent = ("Player: " + playerScore + ", Computer: " + computerScore);
+      numberOfRound.textContent = ('Round '+(roundCount+1)+' upcoming!');
+  
+  }
+
+  playerInput.forEach((button) => {
+  
+  button.addEventListener('click', function (e) {
+    let playerSelection = e.target.textContent;
+    playRound(playerSelection)});
+  })
+  
+    </script>
+
+
+</body>
+</html>
